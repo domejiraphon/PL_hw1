@@ -7,6 +7,7 @@ int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
+double mod(double n1, double n2){ return int(n1) % int(n2);}
 %}
 
 %union {
@@ -16,33 +17,30 @@ double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 };
 
 %start prog
+%token ADD SUB MUL DIV SIN FACTORIAL POW MOD
+%token L_BRACKET R_BRACKET 
 
-%token LPAREN RPAREN FACTORIAL
-%token PLUS MINUS MUL DIV SIN
-%token <val> NUM    /* 'val' is the (only) field declared in %union
+%token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%type <val> expr term factor
+%type <val> expr 
 
 %%
 
 prog : expr                             { std::cout << $1 << std::endl; }
      ;
 
-expr : expr PLUS term                   { $$ = $1 + $3; }
-     | expr MINUS term                  { $$ = $1 - $3; }
-     | term                             /* default action: { $$ = $1; } */
-     ;
+expr : SUB expr		{$$ = -1 * $2;}
+     | NUMBER
+		 | expr DIV expr		{ $$ = $1 / $3;}
+		 | expr MUL expr		{ $$ = $1 * $3;}
+		 | expr ADD expr		{ $$ = $1 + $3;}
+     | expr SUB expr		{ $$ = $1 - $3;}
+		 | expr POW expr		{ $$ = pow($1, $3);}
+		 | expr MOD expr		{ $$ = mod($1, $3);}
+		 | L_BRACKET expr R_BRACKET { $$ = $2; }
+     | expr FACTORIAL { $$ = factorial($1); }
+		 ;
 
-term : term MUL factor                  { $$ = $1 * $3; }
-     | term DIV factor                  { $$ = $1 / $3; }
-     | factor                           /* default action: { $$ = $1; } */
-     ;
-
-factor : NUM                          /* default action: { $$ = $1; } */
-       | LPAREN expr RPAREN             { $$ = $2; }
-       | SIN expr                        { $$ = sin($2); }
-       | expr FACTORIAL                   { $$ = factorial($1); }
-       ;
 
 %%
 

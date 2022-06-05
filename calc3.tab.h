@@ -49,15 +49,17 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    LPAREN = 258,
-    RPAREN = 259,
-    FACTORIAL = 260,
-    PLUS = 261,
-    MINUS = 262,
-    MUL = 263,
-    DIV = 264,
-    SIN = 265,
-    NUM = 266
+    ADD = 258,
+    SUB = 259,
+    MUL = 260,
+    DIV = 261,
+    SIN = 262,
+    FACTORIAL = 263,
+    POW = 264,
+    MOD = 265,
+    L_BRACKET = 266,
+    R_BRACKET = 267,
+    NUMBER = 268
   };
 #endif
 
@@ -65,13 +67,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "calc3.y"
+#line 13 "calc3.y"
 
     double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 75 "calc3.tab.h"
+#line 77 "calc3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

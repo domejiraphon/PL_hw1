@@ -76,7 +76,7 @@
 
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+int yyerror(const char *p) { std::cerr << "ERROR: Undeﬁned symbol" << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 double mod(double n1, double n2){ return int(n1) % int(n2);}
 double usd_to_gbp(double amount, bool reverse=false) 

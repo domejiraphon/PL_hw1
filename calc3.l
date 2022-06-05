@@ -12,16 +12,16 @@
 
                         /* 'val' in 'yylval.val' is the field declared in
                            calc1.y with the %union directive. [0-9]+ (\.[0-9]+)?      { yylval.val_f = atoi(yytext); return NUMF; } */
-[0-9]+(\.[0-9]+)?      { yylval.val = atoi(yytext); return NUM; }
-"+"                     { return PLUS; }
-"-"                     { return MINUS; }
+[0-9]+(\.[0-9]+)?      { yylval.val = atoi(yytext); return NUMBER; }
+"-"                     { return SUB; }
+"+"                     { return ADD; }
 "*"                     { return MUL; }
 "/"                     { return DIV; }
-"sin"|"SIN"             { return SIN; }
+"^"                     { return POW; }
+"%"                     { return MOD; }
+"("                     { return L_BRACKET; }
+")"                     { return R_BRACKET; }
 "!"                     { return FACTORIAL; }
-
-"("                     { return LPAREN; }
-")"                     { return RPAREN; }
 
 [ \t\r\n]+              { /* Ignore white characters. */ }
 .                       { std::cerr << "Invalid token" << std::endl; exit(1); }
