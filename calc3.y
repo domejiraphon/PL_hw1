@@ -9,7 +9,7 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 %}
 
 %union {
-    int val;
+    double val;
     /* You may include additional fields as you want. */
     /* char op; */
 };
@@ -37,7 +37,7 @@ term : term MUL factor                  { $$ = $1 * $3; }
      | factor                           /* default action: { $$ = $1; } */
      ;
 
-factor : NUM                            /* default action: { $$ = $1; } */
+factor : NUM                          /* default action: { $$ = $1; } */
        | LPAREN expr RPAREN             { $$ = $2; }
        | SIN expr                        { $$ = sin($2); }
        ;

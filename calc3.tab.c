@@ -141,7 +141,7 @@ union YYSTYPE
 {
 #line 11 "calc3.y"
 
-    int val;
+    double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
