@@ -11,9 +11,8 @@
 %%
 
                         /* 'val' in 'yylval.val' is the field declared in
-                           calc1.y with the %union directive. */
+                           calc1.y with the %union directive. [0-9]+ (\.[0-9]+)?      { yylval.val_f = atoi(yytext); return NUMF; } */
 [0-9]+                  { yylval.val = atoi(yytext); return NUM; }
-[0-9]+ (\.[0-9]+)?      { yylval.val_f = atoi(yytext); return NUMF; }
 "+"                     { return PLUS; }
 "-"                     { return MINUS; }
 "*"                     { return MUL; }

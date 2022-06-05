@@ -10,7 +10,6 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
 %union {
     int val;
-    float val_f;
     /* You may include additional fields as you want. */
     /* char op; */
 };
@@ -21,7 +20,6 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 %token PLUS MINUS MUL DIV SIN
 %token <val> NUM    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%token <val_f> NUMF
 %type <val> expr term factor
 
 %%
