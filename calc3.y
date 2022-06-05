@@ -50,28 +50,32 @@ double mi_to_km(double dist, bool reverse=false)
 
 %token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%type <val> expr function log_function trig_function conversion temp_conversion dist_conversion constant
+%type <val> expr function log_function trig_function conversion 
+%type <val> temp_conversion dist_conversion constant low_priority_expr
 
 %%
-program_input : program_input line 
+program_input : line 
 							;
               
 line : EOL 
 		 | calculation EOL 
 		 ;
 
-calculation : expr        { std::cout << $1 << std::endl; }
+calculation : low_priority_expr        { std::cout << $1 << std::endl; }
 						;
 
 constant : PI 		{$$ = M_PI; }
 				 ;
 
+low_priority_expr : low_priority_expr ADD expr		{ $$ = $1 + $3;}
+                  | low_priority_expr SUB expr		{ $$ = $1 - $3;}
+                  | expr
+                  ;
+
 expr : SUB expr		{$$ = -1 * $2;}
      | function
      | constant
      | NUMBER
-     | expr ADD expr		{ $$ = $1 + $3;}
-     | expr SUB expr		{ $$ = $1 - $3;}
 		 | expr DIV expr		{ $$ = $1 / $3;}
 		 | expr MUL expr		{ $$ = $1 * $3;}
 		 | expr POW expr		{ $$ = pow($1, $3);}

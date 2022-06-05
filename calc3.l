@@ -46,7 +46,9 @@
 "mi_to_km"|"MI_TO_KM"             { return MI_TO_KM; }
 "km_to_mi"|"KM_TO_MI"             { return KM_TO_MI; }
 
-[ \t\r\n]+              { /* Ignore white characters. */ }
+
+
+[ \t\r]+              { /* Ignore white characters. */ }
 .                       { std::cerr << "ERROR: Undefined symbol" << std::endl; exit(1); }
 
 %%
