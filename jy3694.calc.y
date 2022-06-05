@@ -9,7 +9,7 @@ int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
-
+double mod(double n1, double n2){ return int(n1) % int(n2);}
 %}
 
 %union {
@@ -54,7 +54,7 @@ expr : SUB expr		{$$ = - $2;}
 		 | expr MUL expr		{ $$ = $1 * $3;}
 		 | expr ADD expr		{ $$ = $1 + $3;}
 		 | expr POW expr		{ $$ = pow($1, $3);}
-		 | expr MOD expr		{ $$ = $1 % $3;}
+		 | expr MOD expr		{ $$ = mod($1, $3);}
 		 ;
 
 function : conversion

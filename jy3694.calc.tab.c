@@ -78,7 +78,7 @@ int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
-
+double mod(double n1, double n2){ return int(n1) % int(n2);}
 
 #line 84 "jy3694.calc.tab.c"
 
@@ -1437,7 +1437,7 @@ yyreduce:
 
   case 16:
 #line 57 "jy3694.calc.y"
-                                                { (yyval.val) = (yyvsp[-2].val) % (yyvsp[0].val);}
+                                                { (yyval.val) = mod((yyvsp[-2].val), (yyvsp[0].val));}
 #line 1442 "jy3694.calc.tab.c"
     break;
 
