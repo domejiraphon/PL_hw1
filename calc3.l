@@ -18,6 +18,7 @@
 "*"                     { return MUL; }
 "/"                     { return DIV; }
 "sin"|"SIN"             { return SIN; }
+"!"                     { return FACTORIAL; }
 
 "("                     { return LPAREN; }
 ")"                     { return RPAREN; }

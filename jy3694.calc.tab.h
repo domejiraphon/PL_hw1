@@ -82,8 +82,7 @@ extern int yydebug;
     KM_TO_MI = 288,
     VAR_KEYWORD = 289,
     VARIABLE = 290,
-    EQUALS = 291,
-    NUM = 292
+    EQUALS = 291
   };
 #endif
 
@@ -91,13 +90,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 15 "jy3694.calc.y"
+#line 33 "jy3694.calc.y"
 
     double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 101 "jy3694.calc.tab.h"
+#line 100 "jy3694.calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

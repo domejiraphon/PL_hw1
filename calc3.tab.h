@@ -51,12 +51,13 @@ extern int yydebug;
   {
     LPAREN = 258,
     RPAREN = 259,
-    PLUS = 260,
-    MINUS = 261,
-    MUL = 262,
-    DIV = 263,
-    SIN = 264,
-    NUM = 265
+    FACTORIAL = 260,
+    PLUS = 261,
+    MINUS = 262,
+    MUL = 263,
+    DIV = 264,
+    SIN = 265,
+    NUM = 266
   };
 #endif
 
@@ -64,13 +65,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 11 "calc3.y"
+#line 12 "calc3.y"
 
     double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 74 "calc3.tab.h"
+#line 75 "calc3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

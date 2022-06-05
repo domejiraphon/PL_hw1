@@ -6,6 +6,7 @@
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 %}
 
 %union {
@@ -16,7 +17,7 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
 %start prog
 
-%token LPAREN RPAREN
+%token LPAREN RPAREN FACTORIAL
 %token PLUS MINUS MUL DIV SIN
 %token <val> NUM    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
@@ -40,6 +41,7 @@ term : term MUL factor                  { $$ = $1 * $3; }
 factor : NUM                          /* default action: { $$ = $1; } */
        | LPAREN expr RPAREN             { $$ = $2; }
        | SIN expr                        { $$ = sin($2); }
+       | expr FACTORIAL                   { $$ = factorial($1); }
        ;
 
 %%

@@ -10,6 +10,24 @@ int yylex(); // A function that is to be generated and provided by flex,
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 double mod(double n1, double n2){ return int(n1) % int(n2);}
+double usd_to_gbp(double amount, bool reverse=false) 
+{
+  double out, rate=0.80; //conversion rate of usd to gbp on June 5, 2022
+  if (reverse) out = (1/rate) * amount; else out = amount * rate;
+  return out;
+}
+double gbp_to_euro(double amount, bool reverse=false) 
+{
+  double out, rate=1.16; //conversion rate of usd to gbp on June 5, 2022
+  if (reverse) out = (1/rate) * amount; else out = amount * rate;
+  return out;
+}
+double usd_to_euro(double amount, bool reverse=false) 
+{
+  double out, rate=0.93; //conversion rate of usd to gbp on June 5, 2022
+  if (reverse) out = (1/rate) * amount; else out = amount * rate;
+  return out;
+}
 %}
 
 %union {
@@ -26,7 +44,7 @@ double mod(double n1, double n2){ return int(n1) % int(n2);}
 %token CEL_TO_FAH FAH_TO_CEL
 %token MI_TO_KM KM_TO_MI
 %token VAR_KEYWORD VARIABLE EQUALS
-%token <val> NUM    /* 'val' is the (only) field declared in %union
+%token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
 
 %type <val> program_input line calculation expr function constant temp_conversion conversion dist_conversion log_function trig_function
@@ -55,6 +73,7 @@ expr : SUB expr		{$$ = - $2;}
 		 | expr ADD expr		{ $$ = $1 + $3;}
 		 | expr POW expr		{ $$ = pow($1, $3);}
 		 | expr MOD expr		{ $$ = mod($1, $3);}
+		 | L_BRACKET expr R_BRACKET { $$ = $2; }
 		 ;
 
 function : conversion
@@ -78,12 +97,12 @@ log_function : LOG2 expr  { $$ = log2($2); }
 
 conversion : temp_conversion
 					 | dist_conversion
-					 | expr GBP_TO_USD { $$ = $1; }
-					 | expr USD_TO_GBP { $$ = $1; }
-					 | expr GBP_TO_EURO { $$ = $1; }
-					 | expr EURO_TO_GBP { $$ = $1; }
-					 | expr USD_TO_EURO { $$ = $1; }
-					 | expr EURO_TO_USD { $$ = $1; }
+					 | expr GBP_TO_USD { $$ = usd_to_gbp($1, true); }
+					 | expr USD_TO_GBP { $$ = usd_to_gbp($1); }
+					 | expr GBP_TO_EURO { $$ = gbp_to_euro($1); }
+					 | expr EURO_TO_GBP { $$ = gbp_to_euro($1, true); }
+					 | expr USD_TO_EURO { $$ = usd_to_euro($1); }
+					 | expr EURO_TO_USD { $$ = usd_to_euro($1, true); }
 					 ;
 
 temp_conversion : expr CEL_TO_FAH		{ $$ = $1; }
