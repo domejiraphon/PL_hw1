@@ -8,7 +8,7 @@
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
-double factorial(int n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
+double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 
 %}
 
@@ -20,15 +20,19 @@ double factorial(int n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 
 %start program_input
 
-%token LPAREN RPAREN
-%token PLUS MINUS MUL DIV SIN
+%token EOL PI NUMBER SUB ADD MUL DIV POW MOD L_BRACKET R_BRACKET FACTORIAL
+%token SQRT ABS FLOOR CEIL COS SIN TAN LOG2 LOG10 
+%token GBP_TO_USD USD_TO_GBP GBP_TO_EURO EURO_TO_GBP USD_TO_EURO EURO_TO_USD
+%token CEL_TO_FAH FAH_TO_CEL
+%token MI_TO_KM KM_TO_MI
+%token VAR_KEYWORD VARIABLE EQUALS
 %token <val> NUM    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
 
+%type <val> program_input line calculation expr function constant temp_conversion conversion dist_conversion log_function trig_function
 
 %%
-program_input : \*epsilon*\
-							| program_input line { $$ = $1;}
+program_input : line { $$ = $1;}
 							;
 
 line : EOL 
@@ -36,13 +40,12 @@ line : EOL
 		 ;
 
 calculation : expr
-						| assignment
 						;
 
 constant : PI 		{$$ = M_PI; }
 				 ;
 
-expr : SUB expr		{$$ = -$1 * $2;}
+expr : SUB expr		{$$ = - $2;}
 		 | NUMBER		
 		 | VARIABLE
 		 | constant
@@ -57,8 +60,8 @@ expr : SUB expr		{$$ = -$1 * $2;}
 function : conversion
 				 | log_function
 				 | trig_function
-				 | expr FACTORIAL { $$ = factorial($2); }
-				 | SQRT expr			{ $$ = sqrt($1); }
+				 | expr FACTORIAL { $$ = factorial($1); }
+				 | SQRT expr			{ $$ = sqrt($2); }
 				 | ABS expr				{ $$ = $2 >= 0? $2 : - $2; }
 				 | FLOOR expr			{ $$ = floor($2); }
 				 | CEIL expr 			{ $$ = ceil($2); }
@@ -75,12 +78,12 @@ log_function : LOG2 expr  { $$ = log2($2); }
 
 conversion : temp_conversion
 					 | dist_conversion
-					 | expr GBP_TO_USD { $$ = 1.2 * $2; }
-					 | expr USD_TO_GBP { $$ = 1/1.2 * $2; }
-					 | expr GBP_TO_EURO { $$ = 1.2 * $2; }
-					 | expr EURO_TO_GBP { $$ = 1.2 * $2; }
-					 | expr USD_TO_EURO { $$ = 1/1.2 * $2; }
-					 | expr EURO_TO_USD { $$ = 1.2 * $2; }
+					 | expr GBP_TO_USD { $$ = $1; }
+					 | expr USD_TO_GBP { $$ = $1; }
+					 | expr GBP_TO_EURO { $$ = $1; }
+					 | expr EURO_TO_GBP { $$ = $1; }
+					 | expr USD_TO_EURO { $$ = $1; }
+					 | expr EURO_TO_USD { $$ = $1; }
 					 ;
 
 temp_conversion : expr CEL_TO_FAH		{ $$ = $1; }
@@ -90,8 +93,8 @@ temp_conversion : expr CEL_TO_FAH		{ $$ = $1; }
 dist_conversion : expr MI_TO_KM			{ $$ = $1; }
 								| expr KM_TO_MI			{ $$ = $1; }
 								;
-
-assignment : VAR_KEYWORD VARIABLE EQUALS calculation
+/*
+assignment : VAR_KEYWORD VARIABLE EQUALS calculation*/
 
 
 
