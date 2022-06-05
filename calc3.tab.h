@@ -49,35 +49,37 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ADD = 258,
-    SUB = 259,
-    MUL = 260,
-    DIV = 261,
-    FACTORIAL = 262,
-    POW = 263,
-    MOD = 264,
-    SQRT = 265,
-    ABS = 266,
-    FLOOR = 267,
-    CEIL = 268,
-    COS = 269,
-    SIN = 270,
-    TAN = 271,
-    LOG2 = 272,
-    LOG10 = 273,
-    L_BRACKET = 274,
-    R_BRACKET = 275,
-    GBP_TO_USD = 276,
-    USD_TO_GBP = 277,
-    GBP_TO_EURO = 278,
-    EURO_TO_GBP = 279,
-    USD_TO_EURO = 280,
-    EURO_TO_USD = 281,
-    CEL_TO_FAH = 282,
-    FAH_TO_CEL = 283,
-    MI_TO_KM = 284,
-    KM_TO_MI = 285,
-    NUMBER = 286
+    EOL = 258,
+    PI = 259,
+    ADD = 260,
+    SUB = 261,
+    MUL = 262,
+    DIV = 263,
+    FACTORIAL = 264,
+    POW = 265,
+    MOD = 266,
+    SQRT = 267,
+    ABS = 268,
+    FLOOR = 269,
+    CEIL = 270,
+    COS = 271,
+    SIN = 272,
+    TAN = 273,
+    LOG2 = 274,
+    LOG10 = 275,
+    L_BRACKET = 276,
+    R_BRACKET = 277,
+    GBP_TO_USD = 278,
+    USD_TO_GBP = 279,
+    GBP_TO_EURO = 280,
+    EURO_TO_GBP = 281,
+    USD_TO_EURO = 282,
+    EURO_TO_USD = 283,
+    CEL_TO_FAH = 284,
+    FAH_TO_CEL = 285,
+    MI_TO_KM = 286,
+    KM_TO_MI = 287,
+    NUMBER = 288
   };
 #endif
 
@@ -91,7 +93,7 @@ union YYSTYPE
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 95 "calc3.tab.h"
+#line 97 "calc3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

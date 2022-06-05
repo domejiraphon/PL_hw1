@@ -14,16 +14,18 @@
                            calc1.y with the %union directive. [0-9]+ (\.[0-9]+)?      { yylval.val_f = atoi(yytext); return NUMF; } */
 
 [0-9]+(\.[0-9]+)?      { yylval.val = atoi(yytext); return NUMBER; }
+\n                      { return EOL; }
 "-"                     { return SUB; }
 "+"                     { return ADD; }
 "*"                     { return MUL; }
 "/"                     { return DIV; }
 "^"                     { return POW; }
-"%"                     { return MOD; }
+"%"|"mod"                     { return MOD; }
 "("                     { return L_BRACKET; }
 ")"                     { return R_BRACKET; }
 "!"                     { return FACTORIAL; }
 
+"PI"|"pi"                    { return PI; }
 "sqrt"|"SQRT"           { return SQRT; }
 "abs"|"ABS"             { return ABS; }
 "floor"|"FLOOR"         { return FLOOR; }
@@ -45,6 +47,6 @@
 "km_to_mi"|"KM_TO_MI"             { return KM_TO_MI; }
 
 [ \t\r\n]+              { /* Ignore white characters. */ }
-.                       { std::cerr << "Invalid token" << std::endl; exit(1); }
+.                       { std::cerr << "ERROR: Undefined symbol" << std::endl; exit(1); }
 
 %%

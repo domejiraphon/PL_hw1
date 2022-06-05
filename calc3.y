@@ -5,7 +5,7 @@
 
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+int yyerror(const char *p) { std::cerr << "ERROR: Undefined symbol" << p << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 double mod(double n1, double n2){ return int(n1) % int(n2);}
 double usd_to_gbp(double amount, bool reverse=false) 
@@ -40,8 +40,8 @@ double mi_to_km(double dist, bool reverse=false)
     /* char op; */
 };
 
-%start prog
-%token ADD SUB MUL DIV FACTORIAL POW MOD
+%start program_input
+%token EOL PI ADD SUB MUL DIV FACTORIAL POW MOD
 %token SQRT ABS FLOOR CEIL COS SIN TAN LOG2 LOG10 
 %token L_BRACKET R_BRACKET 
 %token GBP_TO_USD USD_TO_GBP GBP_TO_EURO EURO_TO_GBP USD_TO_EURO EURO_TO_USD
@@ -50,15 +50,25 @@ double mi_to_km(double dist, bool reverse=false)
 
 %token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%type <val> expr function log_function trig_function conversion temp_conversion dist_conversion
+%type <val> expr function log_function trig_function conversion temp_conversion dist_conversion constant
 
 %%
+program_input : program_input line 
+							;
+              
+line : EOL 
+		 | calculation EOL 
+		 ;
 
-prog : expr                             { std::cout << $1 << std::endl; }
-     ;
+calculation : expr        { std::cout << $1 << std::endl; }
+						;
+
+constant : PI 		{$$ = M_PI; }
+				 ;
 
 expr : SUB expr		{$$ = -1 * $2;}
      | function
+     | constant
      | NUMBER
      | expr ADD expr		{ $$ = $1 + $3;}
      | expr SUB expr		{ $$ = $1 - $3;}
@@ -105,6 +115,7 @@ temp_conversion : expr CEL_TO_FAH		{ $$ = $1; }
 dist_conversion : expr MI_TO_KM			{ $$ = mi_to_km($1); }
 								| expr KM_TO_MI			{ $$ = mi_to_km($1, true); }
 								;
+
 %%
 
 int main()
