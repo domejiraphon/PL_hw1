@@ -53,13 +53,31 @@ extern int yydebug;
     SUB = 259,
     MUL = 260,
     DIV = 261,
-    SIN = 262,
-    FACTORIAL = 263,
-    POW = 264,
-    MOD = 265,
-    L_BRACKET = 266,
-    R_BRACKET = 267,
-    NUMBER = 268
+    FACTORIAL = 262,
+    POW = 263,
+    MOD = 264,
+    SQRT = 265,
+    ABS = 266,
+    FLOOR = 267,
+    CEIL = 268,
+    COS = 269,
+    SIN = 270,
+    TAN = 271,
+    LOG2 = 272,
+    LOG10 = 273,
+    L_BRACKET = 274,
+    R_BRACKET = 275,
+    GBP_TO_USD = 276,
+    USD_TO_GBP = 277,
+    GBP_TO_EURO = 278,
+    EURO_TO_GBP = 279,
+    USD_TO_EURO = 280,
+    EURO_TO_USD = 281,
+    CEL_TO_FAH = 282,
+    FAH_TO_CEL = 283,
+    MI_TO_KM = 284,
+    KM_TO_MI = 285,
+    NUMBER = 286
   };
 #endif
 
@@ -67,13 +85,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 13 "calc3.y"
+#line 37 "calc3.y"
 
     double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 77 "calc3.tab.h"
+#line 95 "calc3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
