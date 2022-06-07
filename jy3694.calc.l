@@ -12,19 +12,20 @@
 
                         /* 'val' in 'yylval.val' is the field declared in
                            calc1.y with the %union directive. [0-9]+ (\.[0-9]+)?      { yylval.val_f = atoi(yytext); return NUMF; } */
-\n                      { return EOL; }
-"PI"                    { return PI; }
+
 [0-9]+(\.[0-9]+)?      { yylval.val = atoi(yytext); return NUMBER; }
+\n                      { return EOL; }
 "-"                     { return SUB; }
 "+"                     { return ADD; }
 "*"                     { return MUL; }
 "/"                     { return DIV; }
 "^"                     { return POW; }
-"%"                     { return MOD; }
+"%"|"mod"                     { return MOD; }
 "("                     { return L_BRACKET; }
 ")"                     { return R_BRACKET; }
 "!"                     { return FACTORIAL; }
 
+"PI"|"pi"                    { return PI; }
 "sqrt"|"SQRT"           { return SQRT; }
 "abs"|"ABS"             { return ABS; }
 "floor"|"FLOOR"         { return FLOOR; }
@@ -44,12 +45,12 @@
 "fah_to_cel"|"FAH_TO_CEL"             { return FAH_TO_CEL; }
 "mi_to_km"|"MI_TO_KM"             { return MI_TO_KM; }
 "km_to_mi"|"KM_TO_MI"             { return KM_TO_MI; }
-"var"|"VAR"                     { return VAR_KEYWORD; }
-[a-zA-Z]+[a-z0-9A-Z]+                     { return VARIABLE; }
-"="                             { return EQUALS; }
 
+"var"|"VAR"                      { return VAR_KEYWORD; }
+[a-z]+                      { return VARIABLE; }
+"="                               { return EQUALS; }
 
 [ \t\r]+              { /* Ignore white characters. */ }
-.                       { std::cerr << "ERROR: Undeﬁned symbol" << std::endl; exit(1); }
+.                       { std::cerr << "ERROR: Undefined symbol" << std::endl; exit(1); }
 
 %%

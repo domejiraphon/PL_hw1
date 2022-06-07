@@ -51,38 +51,38 @@ extern int yydebug;
   {
     EOL = 258,
     PI = 259,
-    NUMBER = 260,
+    ADD = 260,
     SUB = 261,
-    ADD = 262,
-    MUL = 263,
-    DIV = 264,
+    MUL = 262,
+    DIV = 263,
+    FACTORIAL = 264,
     POW = 265,
     MOD = 266,
-    L_BRACKET = 267,
-    R_BRACKET = 268,
-    FACTORIAL = 269,
-    SQRT = 270,
-    ABS = 271,
-    FLOOR = 272,
-    CEIL = 273,
-    COS = 274,
-    SIN = 275,
-    TAN = 276,
-    LOG2 = 277,
-    LOG10 = 278,
-    GBP_TO_USD = 279,
-    USD_TO_GBP = 280,
-    GBP_TO_EURO = 281,
-    EURO_TO_GBP = 282,
-    USD_TO_EURO = 283,
-    EURO_TO_USD = 284,
-    CEL_TO_FAH = 285,
-    FAH_TO_CEL = 286,
-    MI_TO_KM = 287,
-    KM_TO_MI = 288,
-    VAR_KEYWORD = 289,
-    VARIABLE = 290,
-    EQUALS = 291
+    SQRT = 267,
+    ABS = 268,
+    FLOOR = 269,
+    CEIL = 270,
+    COS = 271,
+    SIN = 272,
+    TAN = 273,
+    LOG2 = 274,
+    LOG10 = 275,
+    L_BRACKET = 276,
+    R_BRACKET = 277,
+    GBP_TO_USD = 278,
+    USD_TO_GBP = 279,
+    GBP_TO_EURO = 280,
+    EURO_TO_GBP = 281,
+    USD_TO_EURO = 282,
+    EURO_TO_USD = 283,
+    CEL_TO_FAH = 284,
+    FAH_TO_CEL = 285,
+    MI_TO_KM = 286,
+    KM_TO_MI = 287,
+    VAR_KEYWORD = 288,
+    VARIABLE = 289,
+    EQUALS = 290,
+    NUMBER = 291
   };
 #endif
 
@@ -90,7 +90,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "jy3694.calc.y"
+#line 37 "jy3694.calc.y"
 
     double val;
     /* You may include additional fields as you want. */
