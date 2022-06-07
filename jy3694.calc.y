@@ -50,11 +50,12 @@ double mi_to_km(double dist, bool reverse=false)
 %token VAR_KEYWORD VARIABLE EQUALS
 %token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%type <val> expr function log_function trig_function conversion program_input line
+%type <val> expr function log_function trig_function conversion program_input 
 %type <val> temp_conversion dist_conversion constant low_priority_expr
 
 %%
-program_input : line		{ $$ = $1; } 
+program_input : line	
+							| program_input line 
 							;
               
 line : EOL 
