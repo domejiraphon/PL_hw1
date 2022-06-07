@@ -5,7 +5,7 @@
 
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "ERROR: Undefined symbol" << p << std::endl; };
+int yyerror(const char *p) { std::cerr << "ERROR: Undefined symbol" << std::endl; };
 double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
 double mod(double n1, double n2){ return int(n1) % int(n2);}
 double usd_to_gbp(double amount, bool reverse=false) 
@@ -50,9 +50,8 @@ double mi_to_km(double dist, bool reverse=false)
 %token VAR_KEYWORD VARIABLE EQUALS
 %token <val> NUMBER    /* 'val' is the (only) field declared in %union
 %token <char>                        which represents the type of the token. */
-%type <val> expr function log_function trig_function conversion program_input 
-%type <val> temp_conversion dist_conversion constant low_priority_expr
-
+%type <val> expr function log_function trig_function conversion program_input calculation
+%type <val> temp_conversion dist_conversion constant low_priority_expr assignment 
 %%
 program_input : line	
 							| program_input line 
@@ -63,6 +62,7 @@ line : EOL
 		 ;
 
 calculation : low_priority_expr        { std::cout << $1 << std::endl; }
+						| assignment
 						;
 
 constant : PI 		{$$ = M_PI; }
@@ -121,6 +121,10 @@ dist_conversion : expr MI_TO_KM			{ $$ = mi_to_km($1); }
 								| expr KM_TO_MI			{ $$ = mi_to_km($1, true); }
 								;
 
+
+//assignment : VAR_KEYWORD VARIABLE EQUALS calculation { $2->value.var = $4; }
+assignment : VAR_KEYWORD VARIABLE EQUALS calculation { $$ = $4; }
+					 ;
 %%
 
 int main()

@@ -47,7 +47,7 @@
 "km_to_mi"|"KM_TO_MI"             { return KM_TO_MI; }
 
 "var"|"VAR"                      { return VAR_KEYWORD; }
-[a-z]+                      { return VARIABLE; }
+([a-z]|[A-Z])+([a-z]|[A-Z]|[0-9])*     { return VARIABLE; }
 "="                               { return EQUALS; }
 
 [ \t\r]+              { /* Ignore white characters. */ }
