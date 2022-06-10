@@ -72,37 +72,55 @@
 #include <math.h>
 #include <stdio.h>
 
+#include <string>
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "ERROR: Undefined symbol" << std::endl; };
-double factorial(double n){return (n==0) || (n==1) ? 1 : n* factorial(n-1);}
-double mod(double n1, double n2){ return int(n1) % int(n2);}
-double usd_to_gbp(double amount, bool reverse=false) 
+// Convert GBP to USD	 
+double gbp_to_usd(double gbp)   { return gbp * 1.57; }
+// Convert GBP to EURO
+double gbp_to_euro(double gbp)  { return gbp * 1.26; }
+
+// Convert USD to GBP
+double usd_to_gbp(double usd)   { return usd * 0.64; }
+// Convert USD to EURO
+double usd_to_euro(double usd)  { return usd * 0.80; }
+
+// Convert EURO to GBP
+double euro_to_gbp(double euro) { return euro * 0.79; }
+// Convert EURO to USD
+double euro_to_usd(double euro) { return euro * 1.24; }
+
+// Convert celsius to fahrenheit
+double cel_to_fah(double cel) 	{ return cel * 9 / 5 + 32; }
+// Convert fahrenheit to celsius
+double fah_to_cel(double fah) 	{ return (fah - 32) * 5 / 9; }
+
+// Convert kilometers to miles
+double km_to_m(double km) 		  { return km * 0.62137; }
+// Convert miles to kilometers 
+double m_to_km(double m)  		  { return m / 0.62137;} 
+
+// Calculate factorial
+double factorial(double n) 
 {
-  double out, rate=0.80; //conversion rate of usd to gbp on June 5, 2022
-  if (reverse) out = (1/rate) * amount; else out = amount * rate;
-  return out;
-}
-double gbp_to_euro(double amount, bool reverse=false) 
-{
-  double out, rate=1.16; //conversion rate of usd to gbp on June 5, 2022
-  if (reverse) out = (1/rate) * amount; else out = amount * rate;
-  return out;
-}
-double usd_to_euro(double amount, bool reverse=false) 
-{
-  double out, rate=0.93; //conversion rate of usd to gbp on June 5, 2022
-  if (reverse) out = (1/rate) * amount; else out = amount * rate;
-  return out;
-}
-double mi_to_km(double dist, bool reverse=false) 
-{
-  double out, rate=1.609344; //conversion rate for 1 mile to km 
-  if (reverse) out = (1/rate) * dist; else out = dist * rate;
-  return out;
+	double x; double f=1;
+	
+	for (x=1; x<=n; x++) { 
+		f *= x; 
+	}
+	
+	return f;
 }
 
-#line 106 "jy3694.calc.tab.c"
+// Calculate modulus
+int modulo(double x, double y) 
+{
+	return (int)x % (int)y;
+}
+
+
+#line 124 "jy3694.calc.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -191,13 +209,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 37 "jy3694.calc.y"
+#line 55 "jy3694.calc.y"
 
     double val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 201 "jy3694.calc.tab.c"
+#line 219 "jy3694.calc.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -574,13 +592,13 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    56,    56,    57,    60,    61,    64,    65,    68,    71,
-      72,    73,    76,    77,    78,    79,    80,    81,    82,    83,
-      84,    87,    88,    89,    90,    91,    92,    93,    94,    97,
-      98,    99,   102,   103,   106,   107,   108,   109,   110,   111,
-     112,   113,   116,   117,   120,   121,   126
+       0,    75,    75,    76,    79,    80,    83,    84,    87,    90,
+      91,    92,    95,    96,    97,    98,    99,   100,   101,   102,
+     103,   106,   107,   108,   109,   110,   111,   112,   113,   116,
+     117,   118,   121,   122,   125,   126,   127,   128,   129,   130,
+     131,   132,   135,   136,   139,   140,   145
 };
 #endif
 
@@ -1435,193 +1453,193 @@ yyreduce:
   switch (yyn)
     {
   case 6:
-#line 64 "jy3694.calc.y"
+#line 83 "jy3694.calc.y"
                                        { std::cout << (yyvsp[0].val) << std::endl; }
-#line 1441 "jy3694.calc.tab.c"
-    break;
-
-  case 8:
-#line 68 "jy3694.calc.y"
-                        {(yyval.val) = M_PI; }
-#line 1447 "jy3694.calc.tab.c"
-    break;
-
-  case 9:
-#line 71 "jy3694.calc.y"
-                                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val);}
-#line 1453 "jy3694.calc.tab.c"
-    break;
-
-  case 10:
-#line 72 "jy3694.calc.y"
-                                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val);}
 #line 1459 "jy3694.calc.tab.c"
     break;
 
-  case 12:
-#line 76 "jy3694.calc.y"
-                        {(yyval.val) = -1 * (yyvsp[0].val);}
+  case 8:
+#line 87 "jy3694.calc.y"
+                        {(yyval.val) = M_PI; }
 #line 1465 "jy3694.calc.tab.c"
     break;
 
-  case 16:
-#line 80 "jy3694.calc.y"
-                                                { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val);}
+  case 9:
+#line 90 "jy3694.calc.y"
+                                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val);}
 #line 1471 "jy3694.calc.tab.c"
     break;
 
-  case 17:
-#line 81 "jy3694.calc.y"
-                                                { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val);}
+  case 10:
+#line 91 "jy3694.calc.y"
+                                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val);}
 #line 1477 "jy3694.calc.tab.c"
     break;
 
-  case 18:
-#line 82 "jy3694.calc.y"
-                                                { (yyval.val) = pow((yyvsp[-2].val), (yyvsp[0].val));}
+  case 12:
+#line 95 "jy3694.calc.y"
+                        {(yyval.val) = -1 * (yyvsp[0].val);}
 #line 1483 "jy3694.calc.tab.c"
     break;
 
-  case 19:
-#line 83 "jy3694.calc.y"
-                                                { (yyval.val) = mod((yyvsp[-2].val), (yyvsp[0].val));}
+  case 16:
+#line 99 "jy3694.calc.y"
+                                                { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val);}
 #line 1489 "jy3694.calc.tab.c"
     break;
 
-  case 20:
-#line 84 "jy3694.calc.y"
-                                            { (yyval.val) = (yyvsp[-1].val); }
+  case 17:
+#line 100 "jy3694.calc.y"
+                                                { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val);}
 #line 1495 "jy3694.calc.tab.c"
     break;
 
-  case 24:
-#line 90 "jy3694.calc.y"
-                                                  { (yyval.val) = factorial((yyvsp[-1].val)); }
+  case 18:
+#line 101 "jy3694.calc.y"
+                                                { (yyval.val) = pow((yyvsp[-2].val), (yyvsp[0].val));}
 #line 1501 "jy3694.calc.tab.c"
     break;
 
-  case 25:
-#line 91 "jy3694.calc.y"
-                                                                { (yyval.val) = sqrt((yyvsp[0].val)); }
+  case 19:
+#line 102 "jy3694.calc.y"
+                                                { (yyval.val) = modulo((yyvsp[-2].val), (yyvsp[0].val));}
 #line 1507 "jy3694.calc.tab.c"
     break;
 
-  case 26:
-#line 92 "jy3694.calc.y"
-                                                                        { (yyval.val) = (yyvsp[0].val) >= 0? (yyvsp[0].val) : - (yyvsp[0].val); }
+  case 20:
+#line 103 "jy3694.calc.y"
+                                            { (yyval.val) = (yyvsp[-1].val); }
 #line 1513 "jy3694.calc.tab.c"
     break;
 
-  case 27:
-#line 93 "jy3694.calc.y"
-                                                                { (yyval.val) = floor((yyvsp[0].val)); }
+  case 24:
+#line 109 "jy3694.calc.y"
+                                                  { (yyval.val) = factorial((yyvsp[-1].val)); }
 #line 1519 "jy3694.calc.tab.c"
     break;
 
-  case 28:
-#line 94 "jy3694.calc.y"
-                                                                { (yyval.val) = ceil((yyvsp[0].val)); }
+  case 25:
+#line 110 "jy3694.calc.y"
+                                                                { (yyval.val) = sqrt((yyvsp[0].val)); }
 #line 1525 "jy3694.calc.tab.c"
     break;
 
-  case 29:
-#line 97 "jy3694.calc.y"
-                                { (yyval.val) = cos((yyvsp[0].val)); }
+  case 26:
+#line 111 "jy3694.calc.y"
+                                                                        { (yyval.val) = (yyvsp[0].val) >= 0? (yyvsp[0].val) : - (yyvsp[0].val); }
 #line 1531 "jy3694.calc.tab.c"
     break;
 
-  case 30:
-#line 98 "jy3694.calc.y"
-                                                                        { (yyval.val) = sin((yyvsp[0].val)); }
+  case 27:
+#line 112 "jy3694.calc.y"
+                                                                { (yyval.val) = floor((yyvsp[0].val)); }
 #line 1537 "jy3694.calc.tab.c"
     break;
 
-  case 31:
-#line 99 "jy3694.calc.y"
-                                                                    { (yyval.val) = tan((yyvsp[0].val)); }
+  case 28:
+#line 113 "jy3694.calc.y"
+                                                                { (yyval.val) = ceil((yyvsp[0].val)); }
 #line 1543 "jy3694.calc.tab.c"
     break;
 
-  case 32:
-#line 102 "jy3694.calc.y"
-                          { (yyval.val) = log2((yyvsp[0].val)); }
+  case 29:
+#line 116 "jy3694.calc.y"
+                                { (yyval.val) = cos((yyvsp[0].val)); }
 #line 1549 "jy3694.calc.tab.c"
     break;
 
-  case 33:
-#line 103 "jy3694.calc.y"
-                                                              { (yyval.val) = log10((yyvsp[0].val)); }
+  case 30:
+#line 117 "jy3694.calc.y"
+                                                                        { (yyval.val) = sin((yyvsp[0].val)); }
 #line 1555 "jy3694.calc.tab.c"
     break;
 
-  case 36:
-#line 108 "jy3694.calc.y"
-                                                           { (yyval.val) = usd_to_gbp((yyvsp[-1].val), true); }
+  case 31:
+#line 118 "jy3694.calc.y"
+                                                                    { (yyval.val) = tan((yyvsp[0].val)); }
 #line 1561 "jy3694.calc.tab.c"
     break;
 
-  case 37:
-#line 109 "jy3694.calc.y"
-                                                           { (yyval.val) = usd_to_gbp((yyvsp[-1].val)); }
+  case 32:
+#line 121 "jy3694.calc.y"
+                          { (yyval.val) = log2((yyvsp[0].val)); }
 #line 1567 "jy3694.calc.tab.c"
     break;
 
-  case 38:
-#line 110 "jy3694.calc.y"
-                                                            { (yyval.val) = gbp_to_euro((yyvsp[-1].val)); }
+  case 33:
+#line 122 "jy3694.calc.y"
+                                                              { (yyval.val) = log10((yyvsp[0].val)); }
 #line 1573 "jy3694.calc.tab.c"
     break;
 
-  case 39:
-#line 111 "jy3694.calc.y"
-                                                            { (yyval.val) = gbp_to_euro((yyvsp[-1].val), true); }
+  case 36:
+#line 127 "jy3694.calc.y"
+                                                           { (yyval.val) = gbp_to_usd((yyvsp[-1].val)); }
 #line 1579 "jy3694.calc.tab.c"
     break;
 
-  case 40:
-#line 112 "jy3694.calc.y"
-                                                            { (yyval.val) = usd_to_euro((yyvsp[-1].val)); }
+  case 37:
+#line 128 "jy3694.calc.y"
+                                                           { (yyval.val) = usd_to_gbp((yyvsp[-1].val)); }
 #line 1585 "jy3694.calc.tab.c"
     break;
 
-  case 41:
-#line 113 "jy3694.calc.y"
-                                                            { (yyval.val) = usd_to_euro((yyvsp[-1].val), true); }
+  case 38:
+#line 129 "jy3694.calc.y"
+                                                            { (yyval.val) = gbp_to_euro((yyvsp[-1].val)); }
 #line 1591 "jy3694.calc.tab.c"
     break;
 
-  case 42:
-#line 116 "jy3694.calc.y"
-                                                { (yyval.val) = (yyvsp[-1].val); }
+  case 39:
+#line 130 "jy3694.calc.y"
+                                                            { (yyval.val) = euro_to_gbp((yyvsp[-1].val)); }
 #line 1597 "jy3694.calc.tab.c"
     break;
 
-  case 43:
-#line 117 "jy3694.calc.y"
-                                                                                                { (yyval.val) = (yyvsp[-1].val); }
+  case 40:
+#line 131 "jy3694.calc.y"
+                                                            { (yyval.val) = usd_to_euro((yyvsp[-1].val)); }
 #line 1603 "jy3694.calc.tab.c"
     break;
 
-  case 44:
-#line 120 "jy3694.calc.y"
-                                                { (yyval.val) = mi_to_km((yyvsp[-1].val)); }
+  case 41:
+#line 132 "jy3694.calc.y"
+                                                            { (yyval.val) = euro_to_usd((yyvsp[-1].val)); }
 #line 1609 "jy3694.calc.tab.c"
     break;
 
-  case 45:
-#line 121 "jy3694.calc.y"
-                                                                                                { (yyval.val) = mi_to_km((yyvsp[-1].val), true); }
+  case 42:
+#line 135 "jy3694.calc.y"
+                                                { (yyval.val) = cel_to_fah((yyvsp[-1].val)); }
 #line 1615 "jy3694.calc.tab.c"
     break;
 
-  case 46:
-#line 126 "jy3694.calc.y"
-                                                     { (yyval.val) = (yyvsp[0].val); }
+  case 43:
+#line 136 "jy3694.calc.y"
+                                                                                                { (yyval.val) = fah_to_cel((yyvsp[-1].val)); }
 #line 1621 "jy3694.calc.tab.c"
     break;
 
+  case 44:
+#line 139 "jy3694.calc.y"
+                                                { (yyval.val) = m_to_km((yyvsp[-1].val)); }
+#line 1627 "jy3694.calc.tab.c"
+    break;
 
-#line 1625 "jy3694.calc.tab.c"
+  case 45:
+#line 140 "jy3694.calc.y"
+                                                                                                { (yyval.val) = km_to_m((yyvsp[-1].val)); }
+#line 1633 "jy3694.calc.tab.c"
+    break;
+
+  case 46:
+#line 145 "jy3694.calc.y"
+                                                     { (yyval.val) = (yyvsp[0].val); }
+#line 1639 "jy3694.calc.tab.c"
+    break;
+
+
+#line 1643 "jy3694.calc.tab.c"
 
       default: break;
     }
@@ -1853,12 +1871,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 128 "jy3694.calc.y"
+#line 147 "jy3694.calc.y"
 
 
 int main()
-{ while (true){
-    yyparse(); // A parsing function that will be generated by Bison.
-    return 0;
-  }
+{ 
+	yyparse(); // A parsing function that will be generated by Bison.
+	return 0;
+  
 }

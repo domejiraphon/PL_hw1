@@ -90,7 +90,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 37 "jy3694.calc.y"
+#line 55 "jy3694.calc.y"
 
     double val;
     /* You may include additional fields as you want. */
